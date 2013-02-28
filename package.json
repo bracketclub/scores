@@ -1,14 +1,14 @@
 {
   "name": "scores",
-  "version": "0.0.0",
-  "description": "ERROR: No README.md file found!",
+  "version": "0.1.0",
+  "description": "Node module for score tracking for NCAA basketball.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha -c -u bdd -R spec"
   },
-  "repository": "",
+  "repository": "https://github.com/ncrohn/scores.git",
   "author": "Nick Crohn",
-  "license": "BSD",
+  "license": "MIT",
   "devDependencies": {
     "mocha": "~1.8.1"
   },
