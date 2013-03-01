@@ -19,4 +19,23 @@ scoreTracker.watch();
 
 ```
 
+#### Game Object
+```
+{ 
+  id: 'HawaiivUCSantaBarbara20132702', // <home team>v<visitor team><date>
+  startTime: 'Wed Feb 27 2013 22:00:00 GMT-0700',
+  status: 'scheduled',
+  winner: false, // 'home', 'visitor', false
+  home: { 
+    team: 'Hawaii', 
+    score: 0
+  },
+  visitor: { 
+    team: 'UC Santa Barbara', 
+    score: 0
+  }
+}
+
+```
+
 #### MIT License
