@@ -8,7 +8,8 @@ A node module for tracking scores for NCAA Basketball off of ESPN's website.
 var ScoreTracker = require('scores').ScoreTracker;
 
 var scoreTracker = new ScoreTracker({
-  interval: // miliseconds
+  interval: // miliseconds (Default: 15min)
+, scoresUrl: // url
 });
 
 scoreTracker.on('gameChange', function(game) {
