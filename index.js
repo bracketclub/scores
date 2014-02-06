@@ -41,6 +41,7 @@ function ScoreTracker(options) {
     this.options = options;
     this.emissions = [];
     this.interval = null;
+    this.date = null;
 
     EventEmitter.call(this);
 }
@@ -64,7 +65,12 @@ ScoreTracker.prototype.stop = function () {
 };
 
 ScoreTracker.prototype.request = function (ignore) {
-    var url = this.options.url.replace('{date}', moment().format('YYYYMMDD'));
+    var date = moment().subtract('hours', 5).format('YYYYMMDD');
+    if (this.date && date !== this.date) {
+        // Clear emitted game IDs if we are on a new day
+        this.emissions = [];
+    }
+    var url = this.options.url.replace('{date}', this.date = date);
     request(url, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             this.logger.debug('[PARSE]', url);
