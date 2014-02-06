@@ -93,7 +93,7 @@ ScoreTracker.prototype.parse = function (body, ignore) {
         var $game = $(this);
         var id = $game.attr('id').replace(idSuffix, '');
         if (ignore) {
-            self.logger.debug('[IGNORE]', id);
+            self.logger.info('[IGNORE]', id);
             self.emissions.push(id);
         } else if (!_.contains(self.emissions, id)) {
             self.logger.debug('[EMIT]', id);
@@ -105,7 +105,7 @@ ScoreTracker.prototype.parse = function (body, ignore) {
             });
             self.emissions.push(id);
         } else {
-            self.logger.debug('[ALREADY EMITTED]', id);
+            self.logger.info('[ALREADY EMITTED]', id);
         }
     });
 };
