@@ -49,9 +49,9 @@ util.inherits(ScoreTracker, EventEmitter);
 
 ScoreTracker.prototype.start = function () {
     if (!this.interval) {
-        this.logger.debug('[START]', this.options.interval);
-        this.interval = setInterval(this.fetch.bind(this), this.options.interval);
-        this.fetch(this.options.ignoreInitial);
+        this.logger.debug('[START]', 'fetch every', this.options.interval + 'ms');
+        this.interval = setInterval(this.request.bind(this), this.options.interval);
+        this.request(this.options.ignoreInitial);
     }
     return this;
 };
@@ -63,7 +63,7 @@ ScoreTracker.prototype.stop = function () {
     }
 };
 
-ScoreTracker.prototype.fetch = function (ignore) {
+ScoreTracker.prototype.request = function (ignore) {
     var url = this.options.url.replace('{date}', moment().format('YYYYMMDD'));
     request(url, function (error, response, body) {
         if (!error && response.statusCode === 200) {
@@ -82,7 +82,7 @@ ScoreTracker.prototype.parse = function (body, ignore) {
     var $games = $('[id$=' + idSuffix + '].final-state');
     var self = this;
 
-    self.logger.debug('[GAMES]', $games.length);
+    self.logger.debug('[GAMES]', $games.length - this.emissions.length);
     $games.each(function () {
         var $game = $(this);
         var id = $game.attr('id').replace(idSuffix, '');
