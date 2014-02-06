@@ -16,16 +16,16 @@ var scores = new Scores({
 scores.on('game', function(game) {
     /* game
     {
-        id: 'AN_ID_FROM_THE_URLS_DOM_123',
+        id: 'AN_ID_FROM_THE_DOM_NODE_123',
         region: 'MIDWEST', // or null if there is no region
         home: {
             name: 'Home Team Name',
-            seed: 5, // Or null is there is no seed
+            seed: 5, // Or null is there is no seed/rank
             isWinner: false
         },
         visitor: {
             name: 'Visitor Team Name',
-            seed: 12, // Or null is there is no seed
+            seed: 12, // Or null is there is no seed/rank
             isWinner: true
         }
     }
