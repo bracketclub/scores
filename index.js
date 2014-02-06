@@ -34,13 +34,14 @@ function ScoreTracker(options) {
     _.defaults(options, {
         url: 'http://scores.espn.go.com/ncb/scoreboard?date={date}&confId=100',
         interval: 15 * 60 * 1000,
+        maxInterval: null,
         ignoreInitial: true
     });
 
     this.logger = options.logger || bucker.createNullLogger();
     this.options = options;
     this.emissions = [];
-    this.interval = null;
+    this.timeout = null;
     this.date = null;
 
     EventEmitter.call(this);
@@ -49,18 +50,17 @@ function ScoreTracker(options) {
 util.inherits(ScoreTracker, EventEmitter);
 
 ScoreTracker.prototype.start = function () {
-    if (!this.interval) {
-        this.logger.debug('[START]', 'fetch every', this.options.interval + 'ms');
-        this.interval = setInterval(this.request.bind(this), this.options.interval);
+    if (!this.timeout) {
+        this.logger.info('[START]', 'fetch every', this.options.interval + 'ms');
         this.request(this.options.ignoreInitial);
     }
     return this;
 };
 
 ScoreTracker.prototype.stop = function () {
-    if (this.interval) {
-        this.logger.debug('[STOP]');
-        clearInterval(this.interval);
+    if (this.timeout) {
+        this.logger.info('[STOP]');
+        clearTimeout(this.timeout);
     }
 };
 
@@ -73,11 +73,12 @@ ScoreTracker.prototype.request = function (ignore) {
     var url = this.options.url.replace('{date}', this.date = date);
     request(url, function (error, response, body) {
         if (!error && response.statusCode === 200) {
-            this.logger.debug('[PARSE]', url);
+            this.logger.info('[PARSE]', url);
             this.parse(body, ignore);
         } else {
             this.logger.error('[REQUEST]', error);
             this.emit('error', error, response.statusCode);
+            this.timeout = setTimeout(this.request.bind(this), this.options.interval);
         }
     }.bind(this));
 };
@@ -85,15 +86,16 @@ ScoreTracker.prototype.request = function (ignore) {
 ScoreTracker.prototype.parse = function (body, ignore) {
     var $ = cheerio.load(body);
     var idSuffix = '-gameHeader';
-    var $games = $('[id$=' + idSuffix + '].final-state');
+    var $totalGames = $('[id$=' + idSuffix + ']');
+    var $finalGames = $totalGames.filter('.final-state');
     var self = this;
 
-    self.logger.debug('[GAMES]', $games.length - this.emissions.length);
-    $games.each(function () {
+    self.logger.info('[GAMES]', $finalGames.length - this.emissions.length);
+    $finalGames.each(function () {
         var $game = $(this);
         var id = $game.attr('id').replace(idSuffix, '');
         if (ignore) {
-            self.logger.info('[IGNORE]', id);
+            self.logger.debug('[IGNORE]', id);
             self.emissions.push(id);
         } else if (!_.contains(self.emissions, id)) {
             self.logger.debug('[EMIT]', id);
@@ -105,9 +107,13 @@ ScoreTracker.prototype.parse = function (body, ignore) {
             });
             self.emissions.push(id);
         } else {
-            self.logger.info('[ALREADY EMITTED]', id);
+            self.logger.debug('[ALREADY EMITTED]', id);
         }
     });
+
+    if ($totalGames.length === 0) {
+
+    }
 };
 
 module.exports = ScoreTracker;

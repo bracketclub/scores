@@ -10,7 +10,8 @@ program
 var logger = require('bucker').createLogger({
         console: {
             colors: true
-        }
+        },
+        level: 'info'
     });
 
 var s = new Scores({
@@ -20,7 +21,7 @@ var s = new Scores({
 });
 
 s.on('game', function (data) {
-    logger.debug('[GAME]', data);
+    logger.info('[GAME]', JSON.stringify(data));
 });
 
 s.start();
