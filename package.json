@@ -1,21 +1,43 @@
 {
   "name": "scores",
-  "version": "0.1.3",
   "description": "Node module for score tracking for NCAA basketball.",
-  "main": "index.js",
-  "scripts": {
-    "test": "./node_modules/.bin/mocha -c -u bdd -R spec"
-  },
-  "repository": "https://github.com/ncrohn/scores.git",
+  "version": "1.0.0",
   "author": "Nick Crohn",
-  "license": "MIT",
-  "devDependencies": {
-    "mocha": "~1.8.1"
+  "bugs": {
+    "url": "https://github.com/tweetyourbracket/scores/issues"
   },
+  "contributors": [
+    {
+      "name": "Luke Karrys",
+      "email": "luke@lukekarrys.com",
+      "url": "http://lukekarrys.com"
+    }
+  ],
   "dependencies": {
-    "jsdom": "~0.5.0",
-    "moment": "~2.0.0",
-    "request": "~2.14.0",
-    "underscore": "~1.4.4"
+    "bucker": "~1.0.5",
+    "lodash": "~2.4.1",
+    "moment": "~2.5.1",
+    "cheerio": "~0.13.1",
+    "request": "~2.33.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1"
+  },
+  "homepage": "http://github.com/tweetyourbracket/scores",
+  "keywords": [
+    "ncaa",
+    "bracket",
+    "tweetyourbracket",
+    "scores"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tweetyourbracket/scores.git"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 2000 test/test.js",
+    "test-watch": "node ./test/server"
   }
 }
