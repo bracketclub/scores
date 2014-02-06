@@ -15,12 +15,13 @@
   ],
   "dependencies": {
     "bucker": "~1.0.5",
+    "cheerio": "~0.13.1",
     "lodash": "~2.4.1",
     "moment": "~2.5.1",
-    "cheerio": "~0.13.1",
     "request": "~2.33.0"
   },
   "devDependencies": {
+    "commander": "~2.1.0",
     "mocha": "~1.17.1"
   },
   "homepage": "http://github.com/tweetyourbracket/scores",
@@ -38,6 +39,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 2000 test/test.js",
-    "test-watch": "node ./test/server"
+    "test-watch-long": "node ./test/server -m 30",
+    "test-watch-short": "node ./test/server -m 4"
   }
 }

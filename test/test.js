@@ -4,6 +4,7 @@ var s = new ScoreTracker();
 var fs = require('fs');
 var path = require('path');
 
+
 describe('Parser', function () {
 
     it('It should return the correct games from the parser for first round day', function (done) {

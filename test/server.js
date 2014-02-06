@@ -1,4 +1,11 @@
 var Scores = require('../index');
+var program = require('commander');
+var modulePackage = require('../package.json');
+
+program
+  .version(modulePackage.version)
+  .option('-m, --minutes [minutes]', 'Interval in minutes', Number, 10)
+  .parse(process.argv);
 
 var logger = require('bucker').createLogger({
         console: {
@@ -8,7 +15,7 @@ var logger = require('bucker').createLogger({
 
 var s = new Scores({
     logger: logger,
-    interval: 2 * 60 * 1000,
+    interval: program.minutes * 60 * 1000,
     url: 'http://scores.espn.go.com/ncb/scoreboard?date={date}&confId=50'
 });
 
