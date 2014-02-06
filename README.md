@@ -1,10 +1,10 @@
 # Scores
-===
+==============
 
 A node module for tracking scores for NCAA Basketball off of ESPN's website (or any other URL you want to parse).
 
 ## Usage
-```
+```js
 var Scores = require('scores');
 
 var scores = new Scores({
@@ -35,7 +35,6 @@ scores.on('game', function(game) {
 });
 
 scores.start();
-
 ```
 
 ## API
