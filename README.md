@@ -1,4 +1,4 @@
-# Scores
+scores
 ==============
 
 A node module for tracking scores for NCAA Basketball off of ESPN's website (or any other URL you want to parse).
