@@ -42,6 +42,9 @@ scores.start();
 #### `new Scores(options)`
 
 - `options.interval (Integer, default: 900000)` Interval in milliseconds for how often to request the url
+- `options.maxInterval (Integer, default: null)` If a maxInterval is set, the `interval` will be backed off by 50% each time if there are no game events
+- `options.timezone (String, default: 'America/New_York')` A [moment-timezone](http://momentjs.com/timezone/data/) string for which timezone you want to base dates off
+- `options.dailyCutoff (Integer, default: 180 * 60 * 1000)` The amount of milliseconds after midnight that the date should switch. This allows you to keep checking for the games that might go past midnight.
 - `options.url (String)` The url to request. `{date}` will be replaced with today's date as `YYYYMMDD`
 - `options.ignoreInitial (Boolean, default: true)` A boolean whether to ignore any already completed games on the initial request
 - `options.logger` A [bucker](http://github.com/nlf/bucker) compatible instance which will log interesting things

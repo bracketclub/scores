@@ -18,6 +18,7 @@
     "cheerio": "~0.13.1",
     "lodash": "~2.4.1",
     "moment": "~2.5.1",
+    "moment-timezone": "0.0.3",
     "request": "~2.33.0"
   },
   "devDependencies": {
@@ -39,7 +40,8 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 2000 test/test.js",
-    "test-watch-long": "node ./test/server -m 30",
-    "test-watch-short": "node ./test/server -m 4"
+    "test-watch-long": "node ./test/server -m 30 -x 120",
+    "test-watch-short": "node ./test/server -m 1 -x 60",
+    "test-watch-tomorrow": "node ./test/server -m 1 -x 60 -d 20140310"
   }
 }
