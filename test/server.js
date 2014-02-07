@@ -18,9 +18,12 @@ var logger = require('bucker').createLogger({
 
 var s = new Scores({
     logger: logger,
-    interval: program.minutes * 60 * 1000,
-    maxInterval: program.max ? program.max * 60 * 1000 : null,
-    url: 'http://scores.espn.go.com/ncb/scoreboard?date=' + program.date + '&confId=50'
+    interval: program.minutes,
+    maxInterval: program.max ? program.max : null,
+    url: 'http://scores.espn.go.com/ncb/scoreboard?date=' + program.date + '&confId=50',
+    timezone: 'America/New_York',
+    dailyCutoff: 180,
+    ignoreInitial: true
 });
 
 s.on('game', function (data) {

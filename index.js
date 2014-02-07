@@ -29,14 +29,32 @@ var parseRegion = function ($game) {
     return (region || finalFour || championship || '').toUpperCase() || null;
 };
 
+var parseTime = function ($, game) {
+    var status = $(game).find('.game-status').text() || '';
+    var matches = status.match(/([0-9]{1,2}):([0-9]{1,2}) ([AP]M)/i).slice(1, 4);
+    if (matches.length === 3) {
+        return {
+            hours: parseInt(matches[0]),
+            minutes: parseInt(matches[1]),
+            period: matches[2].toUpperCase()
+        };
+    } else {
+        return null;
+    }
+};
+
+var ms = function (m) {
+    return m * 60 * 1000;
+};
+
 function ScoreTracker(options) {
     options || (options = {});
     _.defaults(options, {
         url: 'http://scores.espn.go.com/ncb/scoreboard?date={date}&confId=100',
-        interval: 15 * 60 * 1000,
+        interval: 15,
         maxInterval: null,
         timezone: 'America/New_York',
-        dailyCutoff: 180 * 60 * 1000,
+        dailyCutoff: 180,
         ignoreInitial: true
     });
 
@@ -45,7 +63,8 @@ function ScoreTracker(options) {
     this.emissions = [];
     this.timeout = null;
     this.lastInterval = null;
-    this.date = null;
+    this.currentInterval = null;
+    this.lastDate = null;
 
     EventEmitter.call(this);
 }
@@ -67,36 +86,48 @@ ScoreTracker.prototype.stop = function () {
     }
 };
 
-ScoreTracker.prototype.next = function (interval) {
-    if (interval === 'tomorrow') {
+ScoreTracker.prototype._next = function (interval) {
+    var m = moment().tz(this.options.timezone);
+    if (_.isObject(interval)) {
+        interval =
+            m.clone()
+            .hour(interval.period === 'PM' ? interval.hours + 12 : interval.hours).minute(interval.minutes).second(0).millisecond(0)
+            .diff(m.clone());
+        this.lastInterval = null;
+    } else if (interval === 'tomorrow') {
         // "tomorrow" is midnight in our timezone + our dailyCutoff
         // so that the next request will be made once our "YYYYMMDD" has changed
         interval =
-            moment().tz(this.options.timezone)
-            .hour(23).minute(59).second(60).millisecond(999)
-            .add(this.options.dailyCutoff, 'ms').diff(moment().tz(this.options.timezone));
+            m.clone()
+            .hour(23).minute(59).second(60).millisecond(0)
+            .add(this.options.dailyCutoff, 'm').diff(m.clone());
         // 
         this.lastInterval = null;
     } else if (interval === 'backoff') {
         // Backoff is half of the interval until the max interval
-        interval = Math.min(this.lastInterval ? this.lastInterval + (this.options.interval * 0.5) : this.options.interval, this.options.maxInterval);
+        interval = Math.min(this.lastInterval ? this.lastInterval + (this.lastInterval * 0.5) : ms(this.options.interval), ms(this.options.maxInterval));
         this.lastInterval = interval;
+    } else if (typeof interval === 'number') {
+        interval = ms(interval);
+        this.lastInterval = null;
     } else {
-        interval = this.options.interval;
+        interval = ms(this.options.interval);
         this.lastInterval = interval;
     }
 
+    this.currentInterval = interval;
     this.logger.info('[NEXT]', interval + 'ms');
     this.timeout = setTimeout(this.request.bind(this), interval);
+    this.emit('setTimeout', interval);
 };
 
 ScoreTracker.prototype.request = function (ignore) {
-    var date = moment().tz(this.options.timezone).subtract(this.options.dailyCutoff, 'ms').format('YYYYMMDD');
-    if (this.date && date !== this.date) {
+    var date = moment().tz(this.options.timezone).subtract(this.options.dailyCutoff, 'm').format('YYYYMMDD');
+    if (this.lastDate && date !== this.lastDate) {
         // Clear emitted game IDs if we are on a new day
         this.emissions = [];
     }
-    var url = this.options.url.replace('{date}', this.date = date);
+    var url = this.options.url.replace('{date}', this.lastDate = date);
     request(url, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             this.logger.info('[PARSE]', url);
@@ -104,7 +135,7 @@ ScoreTracker.prototype.request = function (ignore) {
         } else {
             this.logger.error('[REQUEST]', error);
             this.emit('error', error, response.statusCode);
-            this.next();
+            this._next();
         }
     }.bind(this));
 };
@@ -114,8 +145,9 @@ ScoreTracker.prototype.parse = function (body, ignore) {
     var idSuffix = '-gameHeader';
     var $totalGames = $('[id$=' + idSuffix + ']');
     var $finalGames = $totalGames.filter('.final-state');
-    var $inProgressGames = $totalGames.filter('.in-progress'); // TODO: confirm this is the right class
+    var $toStartGames = $totalGames.filter('.preview');
     var newGamesCount = $finalGames.length - this.emissions.length;
+    var emitGameCount = 0;
     var self = this;
 
     self.logger.info('[GAMES]', newGamesCount);
@@ -134,6 +166,7 @@ ScoreTracker.prototype.parse = function (body, ignore) {
                 visitor: parseTeam($game.find('.visitor'))
             });
             self.emissions.push(id);
+            emitGameCount++;
         } else {
             self.logger.debug('[ALREADY EMITTED]', id);
         }
@@ -141,16 +174,20 @@ ScoreTracker.prototype.parse = function (body, ignore) {
 
     if ($totalGames.length === 0) {
         // There are no games today so wait until tomorrow
-        this.next('tomorrow');
-    } else if (newGamesCount === 0 && $inProgressGames.length === 0) {
-        // There are games today but none have started
-        // TODO: see if we can get the times of the first game to start and set the next interval for that
-        this.next('backoff');
-    } else if (newGamesCount === 0 && this.options.maxInterval) {
+        this._next('tomorrow');
+    } else if ($toStartGames.length === $totalGames.length) {
+        // There are games today but none have started, try and get the time of the first game
+        var time = _.chain($toStartGames).map(_.partial(parseTime, $)).compact().sortBy(['period', 'hours', 'minutes']).first().value();
+        if (time && _.has(time, 'hours') && _.has(time, 'minutes') && _.has(time, 'period')) {
+            this._next(time);
+        } else {
+            this._next('backoff');
+        }
+    } else if (emitGameCount === 0 && this.options.maxInterval) {
         // No games have finished, so backoff a little
-        this.next('backoff');
+        this._next('backoff');
     } else {
-        this.next();
+        this._next();
     }
 };
 

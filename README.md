@@ -9,7 +9,7 @@ var Scores = require('scores');
 
 var scores = new Scores({
     // Default: 15min
-    interval: 5 * 60 * 1000 // miliseconds,
+    interval: 30 // minutes,
     // If you change the URL you'll probably want to change `Scores.prototype.parse`
     // Default: ESPN's men's NCAA basketball tournament scoreboard
     url: 'http://place-where-scores-are.com'
@@ -41,10 +41,10 @@ scores.start();
 
 #### `new Scores(options)`
 
-- `options.interval (Integer, default: 900000)` Interval in milliseconds for how often to request the url
-- `options.maxInterval (Integer, default: null)` If a maxInterval is set, the `interval` will be backed off by 50% each time if there are no game events
+- `options.interval (Integer, default: 15)` Interval in minutes for how often to request the url
+- `options.maxInterval (Integer, default: null)` If a maxInterval is set, the `interval` will be backed off by 50% each time if there are no game events until it reaches the maxInterval.
 - `options.timezone (String, default: 'America/New_York')` A [moment-timezone](http://momentjs.com/timezone/data/) string for which timezone you want to base dates off
-- `options.dailyCutoff (Integer, default: 180 * 60 * 1000)` The amount of milliseconds after midnight that the date should switch. This allows you to keep checking for the games that might go past midnight.
+- `options.dailyCutoff (Integer, default: 180)` The amount of minutes after midnight that the date should switch. This allows you to keep checking for the games that might go past midnight.
 - `options.url (String)` The url to request. `{date}` will be replaced with today's date as `YYYYMMDD`
 - `options.ignoreInitial (Boolean, default: true)` A boolean whether to ignore any already completed games on the initial request
 - `options.logger` A [bucker](http://github.com/nlf/bucker) compatible instance which will log interesting things
@@ -60,5 +60,6 @@ scores.start();
 
 - `scores.on('game', function (data) {})`
 - `scores.on('error', function (error, responseCode) {})`
+- `scores.on('setTimeout', function (timeInMsUntilNextReq) {})`
 
 ## MIT License
