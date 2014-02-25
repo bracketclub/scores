@@ -146,7 +146,7 @@ ScoreTracker.prototype.parse = function (body, ignore) {
     var $totalGames = $('[id$=' + idSuffix + ']');
     var $finalGames = $totalGames.filter('.final-state');
     var $toStartGames = $totalGames.filter('.preview');
-    var newGamesCount = $finalGames.length - this.emissions.length;
+    var newGamesCount = _.without($finalGames.map(function () { return $(this).attr('id').replace(idSuffix, ''); }), this.emissions).length;
     var emitGameCount = 0;
     var self = this;
 
