@@ -1,6 +1,10 @@
 scores
 ==============
 
+[![NPM](https://nodei.co/npm/scores.png)](https://nodei.co/npm/scores/)
+
+[![Build Status](https://travis-ci.org/tweetyourbracket/scores.png?branch=master)](https://travis-ci.org/tweetyourbracket/scores)
+
 A node module for tracking scores for NCAA Basketball off of ESPN's website (or any other URL you want to parse).
 
 ## Usage

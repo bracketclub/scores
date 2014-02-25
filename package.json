@@ -1,7 +1,7 @@
 {
   "name": "scores",
   "description": "Node module for score tracking for NCAA basketball.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Nick Crohn",
   "bugs": {
     "url": "https://github.com/tweetyourbracket/scores/issues"
@@ -23,7 +23,8 @@
   },
   "devDependencies": {
     "commander": "~2.1.0",
-    "mocha": "~1.17.1"
+    "mocha": "~1.17.1",
+    "precommit-hook": "~0.3.10"
   },
   "homepage": "http://github.com/tweetyourbracket/scores",
   "keywords": [
