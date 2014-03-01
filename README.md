@@ -1,11 +1,12 @@
 scores
 ==============
 
+Track the completion of sports games from a URL.
+
 [![NPM](https://nodei.co/npm/scores.png)](https://nodei.co/npm/scores/)
 
 [![Build Status](https://travis-ci.org/tweetyourbracket/scores.png?branch=master)](https://travis-ci.org/tweetyourbracket/scores)
 
-A node module for tracking scores for NCAA Basketball off of ESPN's website (or any other URL you want to parse).
 
 ## Usage
 ```js
@@ -14,11 +15,11 @@ var Scores = require('scores');
 var scores = new Scores({
     // Default: 15min
     interval: 30 // minutes,
-    // If you change the URL you'll probably want to change `Scores.prototype.parse`
-    // Default: ESPN's men's NCAA basketball tournament scoreboard
+    // If you change the URL you'll probably want to override `Scores.prototype.parse`
     url: 'http://place-where-scores-are.com'
 });
 
+// Will be fired on the completion of each game
 scores.on('game', function(game) {
     /* game
     {
@@ -40,6 +41,12 @@ scores.on('game', function(game) {
 
 scores.start();
 ```
+
+## How does it work?
+
+It intermittently parses the DOM of the URL to see if any games have been completed. The `parse` method is tied to the DOM structure, so if you are using a different URL, you'll want to change how that method parses the DOM to find completed games.
+
+There is also logic (again, based on the DOM) for what to do in situations where there are no games that day or none of the games have started. If you want this behavior, you'll have to implement it in your modified parse method. See [the original code](https://github.com/tweetyourbracket/scores/blob/master/index.js#L175-L191) for an example.
 
 ## API
 
