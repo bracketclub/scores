@@ -144,6 +144,19 @@ describe('Parser', function () {
         assert.equal(next, expected);
     });
 
+    it('It should not fetch until the first game 12:15pm', function () {
+        var s = new ScoreTracker({
+            timezone: timezone,
+            interval: interval,
+            maxInterval: maxInterval,
+            dailyCutoff: dailyCutoff
+        });
+        s.parse(fs.readFileSync('./test/data/no-started-games-2014-rd1.html'));
+        var next = moment().tz('America/New_York').add(s.currentInterval, 'ms').format(format);
+        var expected = moment().tz('America/New_York').hours(12).minutes(15).seconds(0).milliseconds(0).format(format);
+        assert.equal(next, expected);
+    });
+
     it('It should not fetch until tomorrow if there are no games', function () {
         var s = new ScoreTracker({
             timezone: timezone,

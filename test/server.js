@@ -7,6 +7,7 @@ program
   .option('-m, --minutes [minutes]', 'Interval in minutes', Number, 10)
   .option('-x, --max [max]', 'Max interval in minutes', Number, 0)
   .option('-d, --date [date]', 'Date to check', String, '{date}')
+  .option('-c, --confId [confId]', 'Conf ID to check', String, '100')
   .parse(process.argv);
 
 var logger = require('bucker').createLogger({
@@ -20,7 +21,7 @@ var s = new Scores({
     logger: logger,
     interval: program.minutes,
     maxInterval: program.max ? program.max : null,
-    url: 'http://scores.espn.go.com/ncb/scoreboard?date=' + program.date + '&confId=50',
+    url: 'http://scores.espn.go.com/ncb/scoreboard?date=' + program.date + '&confId=' + program.confId,
     timezone: 'America/New_York',
     dailyCutoff: 180,
     ignoreInitial: true

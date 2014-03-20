@@ -91,7 +91,7 @@ ScoreTracker.prototype._next = function (interval) {
     if (_.isObject(interval)) {
         interval =
             m.clone()
-            .hour(interval.period === 'PM' ? interval.hours + 12 : interval.hours).minute(interval.minutes).second(0).millisecond(0)
+            .hour(interval.period === 'PM' && interval.hours !== 12 ? interval.hours + 12 : interval.hours).minute(interval.minutes).second(0).millisecond(0)
             .diff(m.clone());
         this.lastInterval = null;
     } else if (interval === 'tomorrow') {
@@ -177,7 +177,21 @@ ScoreTracker.prototype.parse = function (body, ignore) {
         this._next('tomorrow');
     } else if ($toStartGames.length === $totalGames.length) {
         // There are games today but none have started, try and get the time of the first game
-        var time = _.chain($toStartGames).map(_.partial(parseTime, $)).compact().sortBy(['period', 'hours', 'minutes']).first().value();
+        var time = _.chain($toStartGames).map(_.partial(parseTime, $)).compact().value().sort(function (a, b) {
+            if (a.period < b.period) return -1;
+            if (a.period > b.period) return 1;
+
+            if (a.hours === 12 && b.hours !== 12) return -1;
+            if (b.hours === 12 && a.hours !== 12) return 1;
+
+            if (a.hours < b.hours) return -1;
+            if (a.hours > b.hours) return 1;
+
+            if (a.minutes < b.minutes) return -1;
+            if (a.minutes > b.minutes) return 1;
+
+            return 0;
+        })[0];
         if (time && _.has(time, 'hours') && _.has(time, 'minutes') && _.has(time, 'period')) {
             this._next(time);
         } else {
