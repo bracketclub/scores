@@ -10,6 +10,12 @@ var moment = require('moment-timezone');
 var format = "YYYY-MM-DDTHH:mm:ss zz";
 var _ = require('lodash');
 
+var nextTomorrow = function (ms) {
+    return moment().tz('America/New_York').add(ms, 'ms').format(format);
+};
+var tomorrowCutoff = function () {
+    return moment().tz('America/New_York').add(1, 'd').hours(0).minutes(0).seconds(0).milliseconds(0).add(dailyCutoff, 'm').format(format);
+};
 
 describe('Parser', function () {
 
@@ -32,7 +38,7 @@ describe('Parser', function () {
             assert.equal(game.region, "MIDWEST");
 
             assert.equal(games.length, 16);
-            assert.equal(currentInterval, interval * 60 * 1000);
+            assert.equal(nextTomorrow(currentInterval), tomorrowCutoff());
             done();
         });
         s.parse(fs.readFileSync(path.resolve('./test/data/round-one-complete.html')));
@@ -57,7 +63,7 @@ describe('Parser', function () {
             assert.equal(game.region, "WEST");
 
             assert.equal(games.length, 8);
-            assert.equal(currentInterval, interval * 60 * 1000);
+            assert.equal(nextTomorrow(currentInterval), tomorrowCutoff());
             done();
         });
         s.parse(fs.readFileSync('./test/data/round-two-complete.html'));
@@ -76,7 +82,7 @@ describe('Parser', function () {
         });
         s.on('setTimeout', function (currentInterval) {
             assert.equal(games.length, 0);
-            assert.equal(currentInterval, interval * 60 * 1000);
+            assert.equal(nextTomorrow(currentInterval), tomorrowCutoff());
             done();
         });
         s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
@@ -98,9 +104,9 @@ describe('Parser', function () {
             }, 0));
             if (count === 3) done();
         });
-        s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
-        s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
-        s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
+        s.parse(fs.readFileSync('./test/data/in-progress-2nd-rd-2014.html'), true);
+        s.parse(fs.readFileSync('./test/data/in-progress-2nd-rd-2014.html'), true);
+        s.parse(fs.readFileSync('./test/data/in-progress-2nd-rd-2014.html'), true);
     });
 
     it('Interval should not increase beyond the max', function (done) {
@@ -124,11 +130,11 @@ describe('Parser', function () {
             }
             if (count === 5) done();
         });
-        s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
-        s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
-        s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
-        s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
-        s.parse(fs.readFileSync('./test/data/round-two-complete.html'), true);
+        s.parse(fs.readFileSync('./test/data/in-progress-2nd-rd-2014.html'), true);
+        s.parse(fs.readFileSync('./test/data/in-progress-2nd-rd-2014.html'), true);
+        s.parse(fs.readFileSync('./test/data/in-progress-2nd-rd-2014.html'), true);
+        s.parse(fs.readFileSync('./test/data/in-progress-2nd-rd-2014.html'), true);
+        s.parse(fs.readFileSync('./test/data/in-progress-2nd-rd-2014.html'), true);
     });
 
     it('It should not fetch until the first game', function () {

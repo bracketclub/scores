@@ -172,7 +172,7 @@ ScoreTracker.prototype.parse = function (body, ignore) {
         }
     });
 
-    if ($totalGames.length === 0) {
+    if ($totalGames.length === 0 || $totalGames.length === $finalGames.length) {
         // There are no games today so wait until tomorrow
         this._next('tomorrow');
     } else if ($toStartGames.length === $totalGames.length) {
