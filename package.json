@@ -1,7 +1,7 @@
 {
   "name": "scores",
   "description": "Track the completion of sports games from a URL.",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "Nick Crohn",
   "bugs": {
     "url": "https://github.com/tweetyourbracket/scores/issues"

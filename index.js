@@ -55,7 +55,8 @@ function ScoreTracker(options) {
         maxInterval: null,
         timezone: 'America/New_York',
         dailyCutoff: 180,
-        ignoreInitial: true
+        ignoreInitial: true,
+        __now: null
     });
 
     this.logger = options.logger || bucker.createNullLogger();
@@ -65,6 +66,7 @@ function ScoreTracker(options) {
     this.lastInterval = null;
     this.currentInterval = null;
     this.lastDate = null;
+    this.__now = options.__now;
 
     EventEmitter.call(this);
 }
@@ -87,11 +89,12 @@ ScoreTracker.prototype.stop = function () {
 };
 
 ScoreTracker.prototype._next = function (interval) {
-    var m = moment().tz(this.options.timezone);
+    var m = (this.__now || moment()).tz(this.options.timezone);
     if (_.isObject(interval)) {
         interval =
             m.clone()
-            .hour(interval.period === 'PM' && interval.hours !== 12 ? interval.hours + 12 : interval.hours).minute(interval.minutes).second(0).millisecond(0)
+            .hour(interval.period === 'PM' && interval.hours !== 12 ? interval.hours + 12 : interval.hours)
+            .minute(interval.minutes).second(0).millisecond(0)
             .diff(m.clone());
         this.lastInterval = null;
     } else if (interval === 'tomorrow') {
@@ -115,6 +118,11 @@ ScoreTracker.prototype._next = function (interval) {
         this.lastInterval = interval;
     }
 
+    if (interval <= 0) {
+        interval = ms(this.options.interval);
+        this.lastInterval = interval;
+    }
+
     this.currentInterval = interval;
     this.logger.info('[NEXT]', interval + 'ms');
     this.timeout = setTimeout(this.request.bind(this), interval);
@@ -122,7 +130,7 @@ ScoreTracker.prototype._next = function (interval) {
 };
 
 ScoreTracker.prototype.request = function (ignore) {
-    var date = moment().tz(this.options.timezone).subtract(this.options.dailyCutoff, 'm').format('YYYYMMDD');
+    var date = (this.__now || moment()).tz(this.options.timezone).subtract(this.options.dailyCutoff, 'm').format('YYYYMMDD');
     if (this.lastDate && date !== this.lastDate) {
         // Clear emitted game IDs if we are on a new day
         this.emissions = [];

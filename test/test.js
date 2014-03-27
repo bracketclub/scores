@@ -138,28 +138,47 @@ describe('Parser', function () {
     });
 
     it('It should not fetch until the first game', function () {
+        var now = moment().hours(12).minutes(0).seconds(0).milliseconds(0);
         var s = new ScoreTracker({
             timezone: timezone,
             interval: interval,
             maxInterval: maxInterval,
-            dailyCutoff: dailyCutoff
+            dailyCutoff: dailyCutoff,
+            __now: now.clone()
         });
         s.parse(fs.readFileSync('./test/data/no-started-games.html'));
-        var next = moment().tz('America/New_York').add(s.currentInterval, 'ms').format(format);
-        var expected = moment().tz('America/New_York').hours(19).minutes(0).seconds(0).milliseconds(0).format(format);
+        var next = now.clone().tz('America/New_York').add(s.currentInterval, 'ms').format(format);
+        var expected = now.clone().tz('America/New_York').hours(19).minutes(0).seconds(0).milliseconds(0).format(format);
+        assert.equal(next, expected);
+    });
+
+    it('If the first game is in the past, use normal interval', function () {
+        var now = moment().hours(9).minutes(16).seconds(0).milliseconds(0);
+        var s = new ScoreTracker({
+            timezone: timezone,
+            interval: interval,
+            maxInterval: maxInterval,
+            dailyCutoff: dailyCutoff,
+            __now: now.clone()
+        });
+        s.parse(fs.readFileSync('./test/data/no-started-games-2014-rd1.html'));
+        var next = now.clone().tz('America/New_York').add(s.currentInterval, 'ms').format(format);
+        var expected = now.clone().tz('America/New_York').add(interval, 'm').format(format);
         assert.equal(next, expected);
     });
 
     it('It should not fetch until the first game 12:15pm', function () {
+        var now = moment().hours(7).minutes(0).seconds(0).milliseconds(0);
         var s = new ScoreTracker({
             timezone: timezone,
             interval: interval,
             maxInterval: maxInterval,
-            dailyCutoff: dailyCutoff
+            dailyCutoff: dailyCutoff,
+            __now: now.clone()
         });
         s.parse(fs.readFileSync('./test/data/no-started-games-2014-rd1.html'));
-        var next = moment().tz('America/New_York').add(s.currentInterval, 'ms').format(format);
-        var expected = moment().tz('America/New_York').hours(12).minutes(15).seconds(0).milliseconds(0).format(format);
+        var next = now.clone().tz('America/New_York').add(s.currentInterval, 'ms').format(format);
+        var expected = now.clone().tz('America/New_York').hours(12).minutes(15).seconds(0).milliseconds(0).format(format);
         assert.equal(next, expected);
     });
 
