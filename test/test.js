@@ -138,7 +138,7 @@ describe('Parser', function () {
     });
 
     it('It should not fetch until the first game', function () {
-        var now = moment().hours(12).minutes(0).seconds(0).milliseconds(0);
+        var now = moment().tz('America/New_York').hours(12).minutes(0).seconds(0).milliseconds(0);
         var s = new ScoreTracker({
             timezone: timezone,
             interval: interval,
@@ -153,7 +153,7 @@ describe('Parser', function () {
     });
 
     it('If the first game is in the past, use normal interval', function () {
-        var now = moment().hours(15).minutes(16).seconds(0).milliseconds(0);
+        var now = moment().tz('America/New_York').hours(15).minutes(16).seconds(0).milliseconds(0);
         var s = new ScoreTracker({
             timezone: timezone,
             interval: interval,
@@ -168,7 +168,7 @@ describe('Parser', function () {
     });
 
     it('It should not fetch until the first game 12:15pm', function () {
-        var now = moment().hours(7).minutes(0).seconds(0).milliseconds(0);
+        var now = moment().tz('America/New_York').hours(7).minutes(0).seconds(0).milliseconds(0);
         var s = new ScoreTracker({
             timezone: timezone,
             interval: interval,
