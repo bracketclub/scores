@@ -90,6 +90,8 @@ ScoreTracker.prototype.stop = function () {
 
 ScoreTracker.prototype._next = function (interval) {
     var m = (this.__now || moment()).tz(this.options.timezone);
+    var cutoff;
+    var nextMoment;
     if (_.isObject(interval)) {
         interval =
             m.clone()
@@ -100,11 +102,17 @@ ScoreTracker.prototype._next = function (interval) {
     } else if (interval === 'tomorrow') {
         // "tomorrow" is midnight in our timezone + our dailyCutoff
         // so that the next request will be made once our "YYYYMMDD" has changed
-        interval =
-            m.clone()
-            .hour(23).minute(59).second(60).millisecond(0)
-            .add(this.options.dailyCutoff, 'm').diff(m.clone());
-        // 
+        cutoff = m.clone().startOf('day').add(this.options.dailyCutoff, 'm');
+
+        if (m.isBefore(cutoff)) {
+            nextMoment = cutoff.clone();
+        } else {
+            nextMoment = m.clone()
+                .hour(23).minute(59).second(60).millisecond(0)
+                .add(this.options.dailyCutoff, 'm');
+        }
+
+        interval = nextMoment.diff(m.clone());
         this.lastInterval = null;
     } else if (interval === 'backoff') {
         // Backoff is half of the interval until the max interval

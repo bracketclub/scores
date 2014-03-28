@@ -167,6 +167,21 @@ describe('Parser', function () {
         assert.equal(next, expected);
     });
 
+    it('tomorrow should refer to the next dailyCutoff', function () {
+        var now = moment().tz('America/New_York').hours(0).minutes(45).seconds(0).milliseconds(0);
+        var s = new ScoreTracker({
+            timezone: timezone,
+            interval: interval,
+            maxInterval: maxInterval,
+            dailyCutoff: dailyCutoff,
+            __now: now.clone()
+        });
+        s.parse(fs.readFileSync('./test/data/round-one-complete.html'));
+        var next = now.clone().tz('America/New_York').add(s.currentInterval, 'ms').format(format);
+        var expected = moment().tz('America/New_York').hours(0).minutes(0).seconds(0).milliseconds(0).add(dailyCutoff, 'm').format(format);
+        assert.equal(next, expected);
+    });
+
     it('It should not fetch until the first game 12:15pm', function () {
         var now = moment().tz('America/New_York').hours(7).minutes(0).seconds(0).milliseconds(0);
         var s = new ScoreTracker({
