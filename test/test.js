@@ -153,7 +153,7 @@ describe('Parser', function () {
     });
 
     it('If the first game is in the past, use normal interval', function () {
-        var now = moment().hours(9).minutes(16).seconds(0).milliseconds(0);
+        var now = moment().hours(15).minutes(16).seconds(0).milliseconds(0);
         var s = new ScoreTracker({
             timezone: timezone,
             interval: interval,
