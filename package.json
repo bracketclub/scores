@@ -14,24 +14,25 @@
     }
   ],
   "dependencies": {
-    "bucker": "~1.0.5",
-    "cheerio": "~0.13.1",
-    "lodash": "~2.4.1",
-    "moment": "~2.5.1",
-    "moment-timezone": "0.0.3",
-    "request": "~2.33.0"
+    "bucker": "^1.0.11",
+    "cheerio": "^0.18.0",
+    "lodash": "^3.3.1",
+    "moment": "^2.9.0",
+    "moment-timezone": "^0.3.0",
+    "request": "^2.53.0"
   },
   "devDependencies": {
-    "commander": "~2.1.0",
-    "mocha": "~1.17.1",
-    "precommit-hook": "~0.3.10"
+    "commander": "^2.6.0",
+    "jshint": "^2.6.0",
+    "mocha": "^2.1.0",
+    "precommit-hook": "^1.0.7"
   },
   "homepage": "http://github.com/tweetyourbracket/scores",
   "keywords": [
-    "ncaa",
     "bracket",
-    "tweetyourbracket",
-    "scores"
+    "ncaa",
+    "scores",
+    "tweetyourbracket"
   ],
   "license": "MIT",
   "main": "index.js",
