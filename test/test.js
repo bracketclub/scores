@@ -210,4 +210,40 @@ describe('Parser', function () {
         assert.equal(next, expected);
     });
 
+    // Using play-in games since that is all that is available when im testing
+    it('Should work for completed games in 2015', function (done) {
+        var s = new ScoreTracker({
+            timezone: timezone,
+            interval: interval,
+            maxInterval: maxInterval,
+            dailyCutoff: dailyCutoff,
+            ignoreInitial: false
+        });
+        var games = [];
+        s.on('game', function (game) {
+            games.push([game.region, game.visitor.name, game.visitor.seed, game.visitor.isWinner].join(' '));
+            if (games.length === 2) {
+                assert.equal(games[0], 'SOUTH Robert Morris 16 true');
+                assert.equal(games[1], 'EAST Dayton 11 true');
+                done();
+            }
+        });
+        s.parse(fs.readFileSync('./test/data/play-in-complete-2015.html'));
+    });
+
+    it('Should work for not yet played games in 2015 first round', function () {
+        var now = moment().tz('America/New_York').hours(7).minutes(0).seconds(0).milliseconds(0);
+        var s = new ScoreTracker({
+            timezone: timezone,
+            interval: interval,
+            maxInterval: maxInterval,
+            dailyCutoff: dailyCutoff,
+            __now: now.clone()
+        });
+        s.parse(fs.readFileSync('./test/data/round-one-start-2015.html'));
+        var next = now.clone().tz('America/New_York').add(s.currentInterval, 'ms').format(format);
+        var expected = now.clone().tz('America/New_York').hours(12).minutes(15).seconds(0).milliseconds(0).format(format);
+        assert.equal(next, expected);
+    });
+
 });
