@@ -26,12 +26,12 @@ scores.on('game', function(game) {
         id: 'AN_ID_FROM_THE_DOM_NODE_123',
         region: 'MIDWEST', // or null if there is no region
         home: {
-            name: 'Home Team Name',
+            name: ['Home Team Name', 'Home team alt name'],
             seed: 5, // Or null is there is no seed/rank
             isWinner: false
         },
         visitor: {
-            name: 'Visitor Team Name',
+            name: ['Visitor Team Name'],
             seed: 12, // Or null is there is no seed/rank
             isWinner: true
         }

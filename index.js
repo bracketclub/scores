@@ -12,8 +12,9 @@ var rRegion = / ([A-Za-z]*) REGION /i,
 
 var parseTeam = function ($team) {
     var seed = $team.find('.team-name span:first-child').text();
+    var $teamName = $team.find('.team-name a[title]');
     return {
-        name: $team.find('.team-name a[title]').attr('title'),
+        name: _.uniq(_.compact([$teamName.attr('title'), $teamName.text()])),
         seed: isNaN(seed) ? null : parseInt(seed, 10),
         isWinner: $team.find('.winner-arrow').css('display') === 'block'
     };

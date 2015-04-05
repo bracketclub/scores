@@ -33,7 +33,7 @@ describe('Parser', function () {
         s.on('setTimeout', function (currentInterval) {
             var game = _.find(games, function (g) { return g.id === "330810150"; });
             assert.equal(game.home.isWinner, true);
-            assert.equal(game.home.name, "Duke");
+            assert.equal(game.home.name[0], "Duke");
             assert.equal(game.home.seed, 2);
             assert.equal(game.region, "MIDWEST");
 
@@ -58,7 +58,7 @@ describe('Parser', function () {
         s.on('setTimeout', function (currentInterval) {
             var game = _.find(games, function (g) { return g.id === "330822250"; });
             assert.equal(game.visitor.isWinner, true);
-            assert.equal(game.visitor.name, "Wichita State");
+            assert.equal(game.visitor.name[0], ["Wichita State"]);
             assert.equal(game.visitor.seed, 9);
             assert.equal(game.region, "WEST");
 
@@ -221,7 +221,7 @@ describe('Parser', function () {
         });
         var games = [];
         s.on('game', function (game) {
-            games.push([game.region, game.visitor.name, game.visitor.seed, game.visitor.isWinner].join(' '));
+            games.push([game.region, game.visitor.name[0], game.visitor.seed, game.visitor.isWinner].join(' '));
             if (games.length === 2) {
                 assert.equal(games[0], 'SOUTH Robert Morris 16 true');
                 assert.equal(games[1], 'EAST Dayton 11 true');
@@ -246,4 +246,23 @@ describe('Parser', function () {
         assert.equal(next, expected);
     });
 
+    it('Should work for the completed Duke vs Michigan St game in 2015 final four', function (done) {
+        var s = new ScoreTracker({
+            timezone: timezone,
+            interval: interval,
+            maxInterval: maxInterval,
+            dailyCutoff: dailyCutoff,
+            ignoreInitial: false
+        });
+        s.on('game', function (game) {
+            assert.equal(game.region, 'FINAL FOUR');
+            // Michigan St has a different text vs title. We now grab both and put them in an array
+            assert.equal(game.visitor.name[0], 'Michigan St');
+            assert.equal(game.visitor.name[1], 'Michigan State');
+            assert.equal(game.visitor.seed, 7);
+            assert.equal(game.visitor.isWinner, false);
+            done();
+        });
+        s.parse(fs.readFileSync('./test/data/final-four-2015.html'));
+    });
 });
