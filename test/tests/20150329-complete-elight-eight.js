@@ -77,7 +77,7 @@ test('complete elite eight from file', (t) => {
   utils.parseFile('20150329-complete-elite-eight', testEvents(t));
 });
 
-test('complete elite eight from url', (t) => {
+test.skip('complete elite eight from url', (t) => {
   utils.parseUrl('http://espn.go.com/mens-college-basketball/scoreboard/_/group/50/date/20150329', testEvents(t));
 });
 

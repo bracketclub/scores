@@ -77,7 +77,7 @@ test('complete final four from file', (t) => {
   utils.parseFile('20150404-complete-final-four', testEvents(t));
 });
 
-test('complete final four from url', (t) => {
+test.skip('complete final four from url', (t) => {
   utils.parseUrl('http://espn.go.com/mens-college-basketball/scoreboard/_/group/50/date/20150404', testEvents(t));
 });
 
