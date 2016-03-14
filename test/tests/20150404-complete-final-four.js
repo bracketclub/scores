@@ -31,7 +31,8 @@ const testEvents = (t) => (err, events) => {
     longName: 'Kentucky Wildcats',
     teamName: 'Wildcats',
     name: 'Kentucky',
-    names: ['Kentucky', 'Kentucky Wildcats', 'Wildcats', 'Kentucky']
+    abbrv: 'UK',
+    names: ['Kentucky', 'Kentucky Wildcats', 'Wildcats', 'Kentucky', 'UK']
   });
 
   t.deepEqual(utils.omitRank(events[0].away), {
@@ -40,7 +41,8 @@ const testEvents = (t) => (err, events) => {
     longName: 'Wisconsin Badgers',
     teamName: 'Badgers',
     name: 'Wisconsin',
-    names: ['Wisconsin', 'Wisconsin Badgers', 'Badgers', 'Wisconsin']
+    abbrv: 'WIS',
+    names: ['Wisconsin', 'Wisconsin Badgers', 'Badgers', 'Wisconsin', 'WIS']
   });
 
   t.equal(events[1].region, 'final four');
@@ -58,7 +60,8 @@ const testEvents = (t) => (err, events) => {
     longName: 'Duke Blue Devils',
     teamName: 'Blue Devils',
     name: 'Duke',
-    names: ['Duke', 'Duke Blue Devils', 'Blue Devils', 'Duke']
+    abbrv: 'DUKE',
+    names: ['Duke', 'Duke Blue Devils', 'Blue Devils', 'Duke', 'DUKE']
   });
 
   t.deepEqual(utils.omitRank(events[1].away), {
@@ -67,7 +70,8 @@ const testEvents = (t) => (err, events) => {
     longName: 'Michigan State Spartans',
     teamName: 'Spartans',
     name: 'Michigan State',
-    names: ['Michigan State', 'Michigan State Spartans', 'Spartans', 'Michigan State']
+    abbrv: 'MSU',
+    names: ['Michigan State', 'Michigan State Spartans', 'Spartans', 'Michigan State', 'MSU']
   });
 
   t.end();

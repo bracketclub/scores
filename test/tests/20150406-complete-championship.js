@@ -5,7 +5,6 @@ const utils = require('../utils');
 
 const testEvents = (t) => (err, events) => {
   t.notOk(err, 'No error');
-
   t.equal(events.length, 1, 'Total events');
   t.equal(utils.complete(events).length, 1, 'Complete events');
   t.equal(utils.progress(events).length, 0, 'In progress events');
@@ -29,7 +28,8 @@ const testEvents = (t) => (err, events) => {
     longName: 'Duke Blue Devils',
     teamName: 'Blue Devils',
     name: 'Duke',
-    names: ['Duke', 'Duke Blue Devils', 'Blue Devils', 'Duke']
+    abbrv: 'DUKE',
+    names: ['Duke', 'Duke Blue Devils', 'Blue Devils', 'Duke', 'DUKE']
   });
 
   t.deepEqual(utils.omitRank(events[0].away), {
@@ -38,7 +38,8 @@ const testEvents = (t) => (err, events) => {
     longName: 'Wisconsin Badgers',
     teamName: 'Badgers',
     name: 'Wisconsin',
-    names: ['Wisconsin', 'Wisconsin Badgers', 'Badgers', 'Wisconsin']
+    abbrv: 'WIS',
+    names: ['Wisconsin', 'Wisconsin Badgers', 'Badgers', 'Wisconsin', 'WIS']
   });
 
   t.end();

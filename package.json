@@ -7,6 +7,7 @@
     "url": "https://github.com/tweetyourbracket/scores/issues"
   },
   "dependencies": {
+    "async": "^1.5.2",
     "bucker": "^1.1.1",
     "jsdom": "^8.1.0",
     "lodash": "^4.6.1",
@@ -48,6 +49,7 @@
   "scripts": {
     "example": "node ./test/example",
     "lint": "eslint .",
+    "teams": "./lib/getTeams.js",
     "test": "tape test/tests/*.js | tap-spec",
     "test:watch": "tape-watch test/tests/*.js | tap-spec",
     "validate": "npm ls"
