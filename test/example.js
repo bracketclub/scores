@@ -7,6 +7,7 @@ const _ = require('lodash');
 program
   .option('-i, --interval [interval]', 'Interval in minutes', String, '1m')
   .option('-d, --date [date]', 'Date to check', String, '{date}')
+  .option('-g, --ignore [ignore]', 'Ignore ids', Array, [])
   .parse(process.argv);
 
 const logger = require('bucker').createLogger({
@@ -17,13 +18,14 @@ const logger = require('bucker').createLogger({
 const emitter = new ScoreEmitter({
   logger,
   interval: program.interval,
-  url: `http://espn.go.com/mens-college-basketball/scoreboard/_/group/50/date/${program.date}`,
+  url: `http://espn.go.com/mens-college-basketball/scoreboard/_/date/${program.date}`,
   timezone: 'America/New_York',
   dailyCutoff: 180,
   parse: {
     finalPeriod: 2,
     periodLength: '20m'
-  }
+  },
+  __parsedIds: program.ignore
 });
 
 emitter
