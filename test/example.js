@@ -1,8 +1,9 @@
 'use strict';
 
-const ScoreEmitter = require('../lib/emitter');
 const program = require('commander');
 const _ = require('lodash');
+const bucker = require('bucker');
+const ScoreEmitter = require('../lib/emitter');
 
 program
   .option('-i, --interval [interval]', 'Interval in minutes', String, '1m')
@@ -10,7 +11,7 @@ program
   .option('-g, --ignore [ignore]', 'Ignore ids', Array, [])
   .parse(process.argv);
 
-const logger = require('bucker').createLogger({
+const logger = bucker.createLogger({
   console: {colors: true},
   level: 'info'
 });
