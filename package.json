@@ -7,27 +7,22 @@
     "url": "https://github.com/tweetyourbracket/scores/issues"
   },
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.0.1",
     "bucker": "^1.1.1",
-    "jsdom": "^8.1.0",
-    "lodash": "^4.6.1",
-    "moment": "^2.12.0",
-    "moment-timezone": "^0.5.1",
+    "jsdom": "^9.4.1",
+    "lodash": "^4.14.2",
+    "moment": "^2.14.1",
+    "moment-timezone": "^0.5.5",
     "ms": "^0.7.1",
-    "request": "^2.69.0"
+    "request": "^2.74.0"
   },
   "devDependencies": {
-    "@lukekarrys/eslint-config": "^2.1.2",
-    "babel-eslint": "^6.1.2",
     "commander": "^2.9.0",
-    "eslint": "^3.2.2",
-    "eslint-plugin-classes": "^0.1.1",
-    "eslint-plugin-import": "^1.12.0",
-    "eslint-plugin-react": "^6.0.0",
     "git-validate": "^2.1.4",
+    "standard": "^8.0.0-beta.3",
     "tap-spec": "^4.1.1",
-    "tape": "^4.5.1",
-    "tape-watch": "^1.3.0"
+    "tape": "^4.6.0",
+    "tape-watch": "^2.1.0"
   },
   "homepage": "http://github.com/tweetyourbracket/scores",
   "keywords": [
@@ -49,7 +44,7 @@
   },
   "scripts": {
     "example": "node ./test/example",
-    "lint": "eslint .",
+    "lint": "standard",
     "teams": "./lib/getTeams.js",
     "test": "tape test/tests/*.js | tap-spec",
     "test:watch": "tape-watch test/tests/*.js | tap-spec",
