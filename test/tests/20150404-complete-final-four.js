@@ -21,7 +21,7 @@ const testEvents = (t) => (err, events) => {
     timeUntil: null
   })
 
-  t.deepEqual(events[0].series, {})
+  t.deepEqual(events[0].series, { completed: true, playedCompetitions: 1, totalCompetitions: 1 })
   t.equal(events[0].seriesCompleted, true)
 
   t.equal(typeof events[0].home.rank, 'number')
@@ -58,7 +58,7 @@ const testEvents = (t) => (err, events) => {
     timeUntil: null
   })
 
-  t.deepEqual(events[1].series, {})
+  t.deepEqual(events[1].series, { completed: true, playedCompetitions: 1, totalCompetitions: 1 })
   t.equal(events[1].seriesCompleted, true)
 
   t.deepEqual(utils.omitRank(events[1].home), {
