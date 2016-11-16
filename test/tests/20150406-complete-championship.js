@@ -7,6 +7,7 @@ const testEvents = (t) => (err, events) => {
   t.notOk(err, 'No error')
   t.equal(events.length, 1, 'Total events')
   t.equal(utils.complete(events).length, 1, 'Complete events')
+  t.equal(utils.seriesComplete(events).length, 1, 'Complete events')
   t.equal(utils.progress(events).length, 0, 'In progress events')
   t.equal(utils.pre(events).length, 0, 'Not started events')
 
@@ -18,6 +19,9 @@ const testEvents = (t) => (err, events) => {
     timeRemaining: null,
     timeUntil: null
   })
+
+  t.deepEqual(events[0].series, {})
+  t.equal(events[0].seriesCompleted, true)
 
   t.equal(typeof events[0].home.rank, 'number')
   t.equal(typeof events[0].away.rank, 'number')

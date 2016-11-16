@@ -16,6 +16,7 @@ test('time remaining for game at halftime', (t) => {
 
     t.equal(events.length, 16, 'Total events')
     t.equal(utils.complete(events).length, 1, 'Complete events')
+    t.equal(utils.seriesComplete(events).length, 1, 'Complete events')
     t.equal(utils.progress(events).length, 3, 'In progress events')
     t.equal(utils.pre(events).length, 12, 'Not started events')
 

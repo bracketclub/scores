@@ -16,6 +16,7 @@ test('scheduled games for the next day', (t) => {
 
     t.equal(events.length, 31, 'Total events')
     t.equal(utils.complete(events).length, 0, 'Complete events')
+    t.equal(utils.seriesComplete(events).length, 0, 'Complete events')
     t.equal(utils.progress(events).length, 0, 'In progress events')
     t.equal(utils.pre(events).length, 31, 'Not started events')
 

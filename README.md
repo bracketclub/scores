@@ -16,7 +16,8 @@ new Scores({
   url: 'http://place-where-scores-are.com',
   interval: '5m', // or a number of ms
   timezone: 'America/New_York',
-  dailyCutoff: 180, // in minutes
+  dailyCutoff: 180, // in minutes,
+  completed: { seriesCompleted: true }, // passed to _.filter to decide if an event is completed
   parse: {
     // Is used to try and guess the ending time of the event
     // In this case we are checking for college basketball where

@@ -15,6 +15,7 @@ test('region name with a space', (t) => {
 
     t.equal(events.length, 16, 'Total events')
     t.equal(utils.complete(events).length, 0, 'Complete events')
+    t.equal(utils.seriesComplete(events).length, 0, 'Complete events')
     t.equal(utils.progress(events).length, 0, 'In progress events')
     t.equal(utils.pre(events).length, 16, 'Not started events')
 

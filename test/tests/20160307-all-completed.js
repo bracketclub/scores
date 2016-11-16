@@ -16,6 +16,7 @@ test('completed games from a previous day', (t) => {
 
     t.equal(events.length, 17, 'Total events')
     t.equal(utils.complete(events).length, 17, 'Complete events')
+    t.equal(utils.seriesComplete(events).length, 17, 'Complete events')
     t.equal(utils.progress(events).length, 0, 'In progress events')
     t.equal(utils.pre(events).length, 0, 'Not started events')
 

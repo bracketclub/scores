@@ -17,10 +17,10 @@
     "request": "^2.74.0"
   },
   "devDependencies": {
+    "@tap-format/spec": "^0.2.0",
     "commander": "^2.9.0",
     "git-validate": "^2.1.4",
     "standard": "^8.0.0-beta.3",
-    "tap-spec": "^4.1.1",
     "tape": "^4.6.0",
     "tape-watch": "^2.1.0"
   },
@@ -46,8 +46,8 @@
     "example": "node ./test/example",
     "lint": "standard",
     "teams": "./lib/getTeams.js",
-    "test": "tape test/tests/*.js | tap-spec",
-    "test:watch": "tape-watch test/tests/*.js | tap-spec",
+    "test": "tape test/tests/*.js | tap-format-spec",
+    "test:watch": "tape-watch test/tests/*.js | tap-format-spec",
     "validate": "npm ls"
   }
 }

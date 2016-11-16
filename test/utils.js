@@ -9,12 +9,14 @@ const readFile = (file) => fs.readFileSync(path.resolve(__dirname, `./data/${fil
 const parseFile = (file, options, cb) => parse(readFile(file), options, cb)
 const parseUrl = (url, options, cb) => parse(url, options, cb)
 
+const seriesComplete = (events) => events.filter((event) => event.seriesCompleted)
 const complete = (events) => events.filter((event) => event.status.completed)
 const progress = (events) => events.filter((event) => event.status.state === 'in')
 const pre = (events) => events.filter((event) => event.status.state === 'pre')
 
 module.exports = {
   complete,
+  seriesComplete,
   progress,
   pre,
   parseUrl,

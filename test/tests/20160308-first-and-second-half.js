@@ -16,6 +16,7 @@ test('time remaining for games in first half and second half', (t) => {
 
     t.equal(events.length, 16, 'Total events')
     t.equal(utils.complete(events).length, 3, 'Complete events')
+    t.equal(utils.seriesComplete(events).length, 3, 'Complete events')
     t.equal(utils.progress(events).length, 2, 'In progress events')
     t.equal(utils.pre(events).length, 11, 'Not started events')
 
@@ -42,6 +43,7 @@ test('time remaining for games in first half and second half with period options
 
     t.equal(events.length, 16, 'Total events')
     t.equal(utils.complete(events).length, 3, 'Complete events')
+    t.equal(utils.seriesComplete(events).length, 3, 'Complete events')
     t.equal(utils.progress(events).length, 2, 'In progress events')
     t.equal(utils.pre(events).length, 11, 'Not started events')
 

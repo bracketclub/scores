@@ -32,7 +32,7 @@ const emitter = new ScoreEmitter({
 emitter
   .on('event', (data) => logger.info('[EVENT]', {
     id: data.id,
-    completed: data.status.completed,
+    completed: data.seriesCompleted,
     home: _.pick(data.home, 'rank', 'winner', 'name'),
     away: _.pick(data.away, 'rank', 'winner', 'name')
   }))
