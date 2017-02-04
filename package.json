@@ -4,7 +4,7 @@
   "version": "3.3.0",
   "author": "Luke Karrys <luke@lukekarrys.com>",
   "bugs": {
-    "url": "https://github.com/tweetyourbracket/scores/issues"
+    "url": "https://github.com/bracketclub/scores/issues"
   },
   "dependencies": {
     "async": "^2.0.1",
@@ -24,12 +24,13 @@
     "tape": "^4.6.0",
     "tape-watch": "^2.1.0"
   },
-  "homepage": "http://github.com/tweetyourbracket/scores",
+  "homepage": "https://github.com/bracketclub/scores",
   "keywords": [
     "bracket",
     "ncaa",
     "scores",
-    "tweetyourbracket"
+    "tweetyourbracket",
+    "bracketclub"
   ],
   "license": "MIT",
   "main": "lib/emitter.js",
@@ -40,7 +41,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/tweetyourbracket/scores.git"
+    "url": "https://github.com/bracketclub/scores.git"
   },
   "scripts": {
     "example": "node ./test/example",

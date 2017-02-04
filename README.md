@@ -5,7 +5,7 @@ Track the completion of sports games from a URL.
 
 [![NPM](https://nodei.co/npm/scores.png)](https://nodei.co/npm/scores/)
 
-[![Build Status](https://travis-ci.org/tweetyourbracket/scores.png?branch=master)](https://travis-ci.org/tweetyourbracket/scores)
+[![Build Status](https://travis-ci.org/bracketclub/scores.png?branch=master)](https://travis-ci.org/bracketclub/scores)
 
 
 ## Usage
