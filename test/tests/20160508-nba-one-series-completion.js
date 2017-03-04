@@ -36,4 +36,3 @@ test('Works with NBA series completion from file', (t) => {
 test.skip('Works with NBA series completion from url', (t) => {
   utils.parseUrl('http://www.espn.com/nba/scoreboard/_/date/20160508', testEvents(t))
 })
-

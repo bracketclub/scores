@@ -40,4 +40,3 @@ test('completed games from a previous day', (t) => {
     t.end()
   })
 })
-

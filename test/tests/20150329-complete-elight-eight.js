@@ -90,4 +90,3 @@ test('complete elite eight from file', (t) => {
 test.skip('complete elite eight from url', (t) => {
   utils.parseUrl('http://espn.go.com/mens-college-basketball/scoreboard/_/group/50/date/20150329', testEvents(t))
 })
-
