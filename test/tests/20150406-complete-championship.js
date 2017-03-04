@@ -56,4 +56,3 @@ test('complete championship from file', (t) => {
 test.skip('complete championship from url', (t) => {
   utils.parseUrl('http://espn.go.com/mens-college-basketball/scoreboard/_/group/50/date/20150406', testEvents(t))
 })
-
