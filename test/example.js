@@ -20,7 +20,6 @@ const emitter = new ScoreEmitter({
   logger,
   interval: program.interval,
   url: `http://espn.go.com/mens-college-basketball/scoreboard/_/date/${program.date}`,
-  timezone: 'America/New_York',
   dailyCutoff: 180,
   parse: {
     finalPeriod: 2,
