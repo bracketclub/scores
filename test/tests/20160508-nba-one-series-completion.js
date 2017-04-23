@@ -20,11 +20,15 @@ const testEvents = (t) => (err, events) => {
     playedCompetitions: 4
   })
 
+  t.equal(events[0].region, 'eastern conference')
+
   t.deepEqual(events[1].series, {
     completed: false,
     totalCompetitions: 7,
     playedCompetitions: 4
   })
+
+  t.equal(events[0].region, 'eastern conference')
 
   t.end()
 }
