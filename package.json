@@ -9,7 +9,7 @@
   "dependencies": {
     "async": "^2.0.1",
     "bucker": "^1.1.1",
-    "jsdom": "^9.4.1",
+    "jsdom": "^10.0.0",
     "lodash": "^4.14.2",
     "moment": "^2.14.1",
     "moment-timezone": "^0.5.5",
@@ -20,7 +20,7 @@
     "@tap-format/spec": "^0.2.0",
     "commander": "^2.9.0",
     "git-validate": "^2.1.4",
-    "standard": "^9.0.0",
+    "standard": "^10.0.2",
     "tape": "^4.6.0",
     "tape-watch": "^2.1.0"
   },
