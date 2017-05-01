@@ -1,13 +1,11 @@
 scores
 ==============
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/bracketclub/scores.svg)](https://greenkeeper.io/)
-
 Track the completion of sports games from a URL.
 
 [![NPM](https://nodei.co/npm/scores.png)](https://nodei.co/npm/scores/)
-
 [![Build Status](https://travis-ci.org/bracketclub/scores.png?branch=master)](https://travis-ci.org/bracketclub/scores)
+[![Greenkeeper badge](https://badges.greenkeeper.io/bracketclub/scores.svg)](https://greenkeeper.io/)
 
 
 ## Usage
