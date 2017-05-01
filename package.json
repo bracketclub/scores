@@ -20,7 +20,7 @@
     "@tap-format/spec": "^0.2.0",
     "commander": "^2.9.0",
     "git-validate": "^2.1.4",
-    "standard": "^9.0.0",
+    "standard": "^10.0.2",
     "tape": "^4.6.0",
     "tape-watch": "^2.1.0"
   },
