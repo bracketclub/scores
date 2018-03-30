@@ -23,10 +23,10 @@ test('time remaining for games in first half and second half', (t) => {
     const progress = utils.progress(events)
 
     t.equal(progress[0].status.timeUntil, null)
-    t.equal(progress[0].status.timeRemaining, ms('542s'))
+    t.equal(progress[0].status.timeRemaining, ms('542s') * utils.LENGTH_COEFFICIENT)
 
     t.equal(progress[1].status.timeUntil, null)
-    t.equal(progress[1].status.timeRemaining, ms('983s'))
+    t.equal(progress[1].status.timeRemaining, ms('983s') * utils.LENGTH_COEFFICIENT)
 
     t.end()
   })
@@ -50,10 +50,10 @@ test('time remaining for games in first half and second half with period options
     const progress = utils.progress(events)
 
     t.equal(progress[0].status.timeUntil, null)
-    t.equal(progress[0].status.timeRemaining, ms('542s'))
+    t.equal(progress[0].status.timeRemaining, ms('542s') * utils.LENGTH_COEFFICIENT)
 
     t.equal(progress[1].status.timeUntil, null)
-    t.equal(progress[1].status.timeRemaining, ms(`${983 + (20 * 60)}s`))
+    t.equal(progress[1].status.timeRemaining, ms(`${983 + (20 * 60)}s`) * utils.LENGTH_COEFFICIENT)
 
     t.end()
   })

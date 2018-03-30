@@ -34,7 +34,7 @@ test('Time left in overtime', (t) => {
   utils.parseFile(OT_FILE, options, (err, events) => {
     t.notOk(err)
 
-    t.equal(events.find(OT_GAME).status.timeRemaining, ms('219s'))
+    t.equal(events.find(OT_GAME).status.timeRemaining, ms('219s') * utils.LENGTH_COEFFICIENT)
 
     t.end()
   })

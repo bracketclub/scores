@@ -41,7 +41,7 @@ test('time remaining for game at halftime', (t) => {
     const progress = utils.progress(events)
 
     t.equal(progress[2].status.timeUntil, null)
-    t.equal(progress[2].status.timeRemaining, ms('20m'))
+    t.equal(progress[2].status.timeRemaining, ms('20m') * utils.LENGTH_COEFFICIENT)
 
     t.end()
   })

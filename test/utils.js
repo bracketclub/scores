@@ -15,6 +15,7 @@ const progress = (events) => events.filter((event) => event.status.state === 'in
 const pre = (events) => events.filter((event) => event.status.state === 'pre')
 
 module.exports = {
+  LENGTH_COEFFICIENT: 2.5,
   complete,
   seriesComplete,
   progress,
