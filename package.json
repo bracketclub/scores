@@ -20,7 +20,7 @@
     "@tap-format/spec": "^0.2.0",
     "commander": "^2.9.0",
     "git-validate": "^2.1.4",
-    "standard": "^10.0.2",
+    "prettier": "^2.2.1",
     "tape": "^4.6.0",
     "tape-watch": "^2.1.0"
   },
@@ -45,7 +45,7 @@
   },
   "scripts": {
     "example": "node ./test/example",
-    "lint": "standard",
+    "lint": "prettier -l .",
     "teams": "./lib/getTeams.js",
     "test": "tape test/tests/*.js | tap-format-spec",
     "test:watch": "tape-watch test/tests/*.js | tap-format-spec",

@@ -1,5 +1,4 @@
-scores
-==============
+# scores
 
 Track the completion of sports games from a URL.
 
@@ -7,15 +6,15 @@ Track the completion of sports games from a URL.
 [![Build Status](https://travis-ci.org/bracketclub/scores.png?branch=master)](https://travis-ci.org/bracketclub/scores)
 [![Greenkeeper badge](https://badges.greenkeeper.io/bracketclub/scores.svg)](https://greenkeeper.io/)
 
-
 ## Usage
+
 ```js
-const Scores = require('scores');
+const Scores = require("scores");
 
 new Scores({
-  url: 'http://place-where-scores-are.com',
-  interval: '5m', // or a number of ms
-  timezone: 'America/New_York',
+  url: "http://place-where-scores-are.com",
+  interval: "5m", // or a number of ms
+  timezone: "America/New_York",
   dailyCutoff: 180, // in minutes,
   completed: { seriesCompleted: true }, // passed to _.filter to decide if an event is completed
   parse: {
@@ -23,13 +22,13 @@ new Scores({
     // In this case we are checking for college basketball where
     // there are two 20 minute halves. Eg NBA would be '12m' and 4
     finalPeriod: 2,
-    periodLength: '20m' // or a number of ms
-  }
+    periodLength: "20m", // or a number of ms
+  },
 })
-// Will be fired on the completion of each game
-.on('event', (game) => console.log(game))
-// Start the watcher
-.start();
+  // Will be fired on the completion of each game
+  .on("event", (game) => console.log(game))
+  // Start the watcher
+  .start();
 ```
 
 ## How does it work?
@@ -48,10 +47,12 @@ It intermittently parses the DOM of the URL to see if any games have been comple
 - `options.parse (Object)` Options that will be passed directly to the parse method
 
 #### `methods`
+
 - `start()` Start the interval to watch for new games
 - `stop()` Stop watching
 
 #### `events`
+
 - `scores.on('event', event => { ... })`
 - `scores.on('error', err => { ... })`
 
