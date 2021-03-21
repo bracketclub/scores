@@ -9,7 +9,7 @@ Track the completion of sports games from a URL.
 ## Usage
 
 ```js
-const Scores = require("scores");
+const Scores = require("scores")
 
 new Scores({
   url: "http://place-where-scores-are.com",
@@ -28,7 +28,7 @@ new Scores({
   // Will be fired on the completion of each game
   .on("event", (game) => console.log(game))
   // Start the watcher
-  .start();
+  .start()
 ```
 
 ## How does it work?
