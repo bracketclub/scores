@@ -7,7 +7,7 @@
     "url": "https://github.com/bracketclub/scores/issues"
   },
   "dependencies": {
-    "async": "^2.0.1",
+    "async": "^3.2.2",
     "bucker": "^1.1.1",
     "jsdom": "^11.0.0",
     "lodash": "^4.14.2",
